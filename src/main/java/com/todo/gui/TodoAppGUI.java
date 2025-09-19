@@ -28,6 +28,8 @@ public class TodoAppGUI extends JFrame{
         this.todoDAO = new TodoAppDAO();
         initializeComponent();
         setupLayout();
+        setupEventListeners();
+        
     }
 
     private void initializeComponent(){
@@ -93,10 +95,12 @@ public class TodoAppGUI extends JFrame{
         inputPanel.add(new JLabel("Title : "), gbc);
 
         gbc.gridx = 1;
+        // gbc.fill = GridBagConstraints.HORIZONTAL;
         inputPanel.add(titleField, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 1;
+        // gbc.fill = GridBagConstraints.HORIZONTAL;
         inputPanel.add(new JLabel("Description : "), gbc);
 
         gbc.gridx = 1;
@@ -106,29 +110,32 @@ public class TodoAppGUI extends JFrame{
         gbc.gridy = 2;
         inputPanel.add(completedCheckbox, gbc);
 
-        JPanel buttoPanel = new JPanel(new FlowLayout());
-        buttoPanel.add(addButton);
-        buttoPanel.add(updateButton);
-        buttoPanel.add(deleteButton);
-        buttoPanel.add(refreshButton);
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+        buttonPanel.add(addButton);
+        buttonPanel.add(updateButton);
+        buttonPanel.add(deleteButton);
+        buttonPanel.add(refreshButton);
 
         JPanel filterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         filterPanel.add(new JLabel("Filter : "));
         filterPanel.add(filterComboBox);
 
-        JPanel northPanel = new JPanel(new GridBagLayout());
+        JPanel northPanel = new JPanel(new BorderLayout());
+        northPanel.add(filterPanel, BorderLayout.NORTH);
+        northPanel.add(inputPanel, BorderLayout.CENTER);
+        northPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        northPanel.add(filterPanel, gbc);
+        // gbc.gridx = 0;
+        // gbc.gridy = 0;
+        // northPanel.add(filterPanel, gbc);
 
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        northPanel.add(inputPanel, gbc);
+        // gbc.gridx = 1;
+        // gbc.gridy = 1;
+        // northPanel.add(inputPanel, gbc);
 
-        gbc.gridx = 1;
-        gbc.gridy = 2;
-        northPanel.add(buttoPanel, gbc);
+        // gbc.gridx = 1;
+        // gbc.gridy = 2;
+        // northPanel.add(buttoPanel, gbc);
 
         add(northPanel, BorderLayout.NORTH);
 
@@ -137,5 +144,48 @@ public class TodoAppGUI extends JFrame{
         JPanel statusPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         statusPanel.add(new JLabel("Select a row to edit or delete"));
         add(statusPanel, BorderLayout.SOUTH);
+    }
+
+    private void setupEventListeners() {
+        addButton.addActionListener((e)-> {addTodo();});
+        updateButton.addActionListener((e)-> {updateTodo();});
+        deleteButton.addActionListener((e)-> {deleteTodo();});
+        refreshButton.addActionListener((e)-> {refreshTodo();});
+        filterComboBox.addActionListener((e)-> {filterTodos();});
+    }
+    private void addTodo() {
+        
+    }
+    private void updateTodo() {
+
+    }
+    private void deleteTodo() {
+
+    }
+    private void refreshTodo() {
+        loadTodos();
+    }
+    private void filterTodos() {
+        
+    }
+    private void loadTodos() {
+        try{
+            List<Todo> todos = todoDAO.getAllTodos();
+            updateTable(todos);
+        }
+        catch(SQLException e)
+        {
+            JOptionPane.showMessageDialog(this, "Error Loading todos : "+e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void updateTable(List<Todo> todos)
+    {
+        tableModel.setRowCount(0);
+        for(Todo todo : todos)
+        {
+            Object[] row = {todo.getId(), todo.getTitle(), todo.getDescription(), todo.isCompleted(), todo.getCreated_at(), todo.getUpdated_at()};
+            tableModel.addRow(row);
+        }
     }
 }

@@ -1,8 +1,9 @@
+
 package com.todo.model;
 import java.time.LocalDateTime;
 
 public class Todo {
-    private String id;
+    private int id;
     private String title;
     private String description;
     private boolean completed;
@@ -20,7 +21,7 @@ public class Todo {
         this.description = description;
     }
 
-    public Todo(String id, String title, String description, boolean completed, LocalDateTime created_at, LocalDateTime updated_at){
+    public Todo(int id, String title, String description, boolean completed, LocalDateTime created_at, LocalDateTime updated_at){
         this.id = id;
         this.title = title;
         this.description = description;
@@ -29,7 +30,7 @@ public class Todo {
         this.updated_at = updated_at;   
     }
 
-    public Todo(String id, String title, boolean completed) {
+    public Todo(int id, String title, boolean completed) {
         this.id = id;
         this.title = title;
         this.completed = completed;
@@ -37,11 +38,11 @@ public class Todo {
         this.updated_at = LocalDateTime.now();
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
