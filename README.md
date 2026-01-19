@@ -86,12 +86,16 @@ The application will attempt to connect to the database on startup and launch th
 - `src/main/java/com/todo/gui/TodoAppGUI.java` - Swing GUI implementation
 - `src/main/java/com/todo/util/DatabaseConnection.java` - Database connection utility
 
+## Screenshots
+
+![Demo image](readme-images/demo-screenshot1.png)
+
 ## Technologies Used
 
 - Java 11
 - Java Swing (for GUI)
 - MySQL (for database)
-- Maven (for build management)
+- Maven (for build management
 
 ## License
 
